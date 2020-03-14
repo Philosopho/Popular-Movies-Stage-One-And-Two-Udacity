@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 
 
 public class MovieTest {
-    public int _ID = 1;
+    private int _ID = 1;
     private String titleParam = "Jaws";
     private String imageUrlParam = "movieDatabase";
     private String releaseDateParam = "1965";
