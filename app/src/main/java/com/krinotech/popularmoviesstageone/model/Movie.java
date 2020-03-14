@@ -1,6 +1,7 @@
 package com.krinotech.popularmoviesstageone.model;
 
 public class Movie {
+
     private String title;
     private String imageUrl;
     private String releaseDate;
