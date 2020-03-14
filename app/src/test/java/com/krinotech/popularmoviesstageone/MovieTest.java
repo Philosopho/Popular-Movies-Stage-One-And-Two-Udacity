@@ -9,6 +9,7 @@ import static org.junit.Assert.assertEquals;
 
 
 public class MovieTest {
+    public int _ID = 1;
     private String titleParam = "Jaws";
     private String imageUrlParam = "movieDatabase";
     private String releaseDateParam = "1965";
@@ -20,6 +21,7 @@ public class MovieTest {
     @Before
     public void setUp() {
         testSubject = new Movie(
+                _ID,
                 titleParam,
                 imageUrlParam,
                 releaseDateParam,
@@ -30,6 +32,11 @@ public class MovieTest {
     @Test
     public void movie_should_have_empty_constructor(){
         new Movie();
+    }
+
+    @Test
+    public void movie_getID_should_be_1() {
+        assertEquals(testSubject.getID(), _ID);
     }
 
     @Test
