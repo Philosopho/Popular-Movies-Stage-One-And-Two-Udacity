@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Popular Movies, Stage One</string>
     <string name="an_error_occurred">An error occurred</string>
+    <string name="default_movie_poster_content_description">A Movie Poster</string>
 </resources>

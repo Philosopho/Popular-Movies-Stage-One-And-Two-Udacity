@@ -1,5 +1,6 @@
 package com.krinotech.popularmoviesstageone;
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -10,30 +11,27 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.krinotech.popularmoviesstageone.model.Movie;
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
-
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapterViewHolder> {
 
-    public List<Movie> movies;
+    public Movie[] movies;
     private OnClickMovieHandler clickHandler;
 
     @Override
     public int getItemCount() {
         if(movies == null) return 0;
-        return movies.size();
+        return movies.length;
     }
 
     public interface OnClickMovieHandler {
         void onClick(Movie movie);
     }
 
-    public MovieAdapter(List<Movie> movies, OnClickMovieHandler clickHandler) {
-        this.movies = movies;
+    public MovieAdapter(OnClickMovieHandler clickHandler) {
         this.clickHandler = clickHandler;
     }
 
     public class MovieAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public ImageView movieListItemImageView;
+        final ImageView movieListItemImageView;
 
         public MovieAdapterViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -45,7 +43,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
 
         @Override
         public void onClick(View v) {
-            Movie movie = movies.get(getAdapterPosition());
+            Movie movie = movies[getAdapterPosition()];
 
             clickHandler.onClick(movie);
         }
@@ -55,17 +53,23 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     @NonNull
     @Override
     public MovieAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.movie_list_item, parent, false);
+        return new MovieAdapterViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MovieAdapterViewHolder holder, int position) {
-        Movie movie = movies.get(position);
+        Movie movie = movies[position];
 
         Picasso.get()
                 .load(movie.getImageUrl())
-                .placeholder(R.drawable.ic_launcher_background)
                 .error(R.drawable.ic_launcher_background)
                 .into(holder.movieListItemImageView);
+    }
+
+    public void setMovies(Movie[] movies){
+        this.movies = movies;
+        notifyDataSetChanged();
     }
 }

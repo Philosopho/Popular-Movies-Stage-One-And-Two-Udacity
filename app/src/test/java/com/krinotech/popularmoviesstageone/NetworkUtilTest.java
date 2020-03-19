@@ -24,8 +24,12 @@ public class NetworkUtilTest {
     }
 
     @Test
+    public void IMAGE_BASE_URL() {
+        assertEquals(NetworkUtil.IMAGE_BASE_URL, "http://image.tmdb.org/t/p/");
+    }
+
+    @Test
     public void API_KEY_PARAM() {
         assertEquals(NetworkUtil.API_KEY_PARAM, "api_key");
-
     }
 }
