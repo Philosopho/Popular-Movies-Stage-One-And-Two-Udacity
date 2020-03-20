@@ -1,5 +1,6 @@
 package com.krinotech.popularmoviesstageone;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -24,12 +27,11 @@ import java.net.URL;
 public class MainActivity extends AppCompatActivity implements MovieAdapter.OnClickMovieHandler {
     public static final String TAG = MainActivity.class.getSimpleName();
 
-    public final static String TITLE = "Pop Movies";
-
     private TextView mErrorMessageTextView;
     private RecyclerView mRecyclerView;
     private ProgressBar mProgressBar;
     private MovieAdapter mMovieAdapter;
+    private boolean mSortedPopular = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +51,48 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnCl
         mRecyclerView.setAdapter(mMovieAdapter);
         new MovieTask().execute(NetworkUtil.getPopularMoviesURL());
 
-        setTitle(TITLE);
+        setTitle(getString(R.string.main_activity_title));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.movie_menu_sort, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+
+        switch (itemId) {
+            case R.id.mi_popular:
+                getMoviesPopular();
+                break;
+            case R.id.mi_rating:
+                getMoviesRated();
+                break;
+        }
+        return true;
+    }
+
+    private void getMoviesPopular() {
+        if(!mSortedPopular){
+            new MovieTask().execute(NetworkUtil.getPopularMoviesURL());
+            mSortedPopular = true;
+        }
+        else {
+            Toast.makeText(this, getString(R.string.popular_sorted_true), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void getMoviesRated() {
+        if(mSortedPopular){
+            new MovieTask().execute(NetworkUtil.getTopRatedMoviesURL());
+            mSortedPopular = false;
+        }
+        else {
+            Toast.makeText(this, getString(R.string.rated_sorted_true), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

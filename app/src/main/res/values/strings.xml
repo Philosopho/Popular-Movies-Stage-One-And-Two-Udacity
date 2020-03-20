@@ -2,4 +2,12 @@
     <string name="app_name">Popular Movies, Stage One</string>
     <string name="an_error_occurred">An error occurred</string>
     <string name="default_movie_poster_content_description">A Movie Poster</string>
+    <string name="popular_menu_item">Most Popular</string>
+    <string name="ratings_menu_item">Highest Rated</string>
+
+    <!--Main Activity -->
+    <string name="main_activity_title">Pop Movies</string>
+    <string name="popular_sorted_true">Movies already sorted by popularity.</string>
+    <string name="rated_sorted_true">Movies already sorted by highest rated.</string>
+
 </resources>
