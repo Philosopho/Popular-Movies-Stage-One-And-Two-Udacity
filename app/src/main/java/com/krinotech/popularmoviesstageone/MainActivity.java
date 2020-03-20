@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,6 +34,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnCl
     private ProgressBar mProgressBar;
     private MovieAdapter mMovieAdapter;
     private boolean mSortedPopular = true;
+    private boolean mSortedRatings = false;
+    private ConnectivityManager connectivityManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,10 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnCl
         mRecyclerView.setLayoutManager(gridLayoutManager);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(mMovieAdapter);
+        connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(!isConnected()){
+            mSortedPopular = false;
+        }
         new MovieTask().execute(NetworkUtil.getPopularMoviesURL());
 
         setTitle(getString(R.string.main_activity_title));
@@ -76,22 +84,37 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnCl
     }
 
     private void getMoviesPopular() {
-        if(!mSortedPopular){
-            new MovieTask().execute(NetworkUtil.getPopularMoviesURL());
-            mSortedPopular = true;
+        if(isConnected()){
+
+            if(!mSortedPopular){
+                new MovieTask().execute(NetworkUtil.getPopularMoviesURL());
+                mSortedPopular = true;
+                mSortedRatings = false;
+            }
+            else {
+                Toast.makeText(this, getString(R.string.popular_sorted_true), Toast.LENGTH_SHORT).show();
+            }
+
         }
         else {
-            Toast.makeText(this, getString(R.string.popular_sorted_true), Toast.LENGTH_SHORT).show();
+            showToastNetworkError();
         }
     }
 
     private void getMoviesRated() {
-        if(mSortedPopular){
-            new MovieTask().execute(NetworkUtil.getTopRatedMoviesURL());
-            mSortedPopular = false;
+        if(isConnected()){
+
+            if(!mSortedRatings){
+                new MovieTask().execute(NetworkUtil.getTopRatedMoviesURL());
+                mSortedRatings = true;
+                mSortedPopular = false;
+            }
+            else {
+                Toast.makeText(this, getString(R.string.rated_sorted_true), Toast.LENGTH_SHORT).show();
+            }
         }
         else {
-            Toast.makeText(this, getString(R.string.rated_sorted_true), Toast.LENGTH_SHORT).show();
+            showToastNetworkError();
         }
     }
 
@@ -102,12 +125,12 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnCl
     }
 
     private class MovieTask extends AsyncTask<URL, Void, Movie[]> {
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             showProgressBar();
         }
-
         @Override
         protected Movie[] doInBackground(URL... urls) {
             URL url = urls[0];
@@ -129,12 +152,18 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnCl
                 mMovieAdapter.setMovies(movies);
             }
             else {
-                showErrorMessage();
+                if(isConnected()){
+                    showErrorMessage(getString(R.string.an_error_occurred));
+                }
+                else {
+                    showErrorMessage(getString(R.string.network_error));
+                }
             }
         }
-    }
 
-    private void showErrorMessage() {
+    }
+    private void showErrorMessage(String errorText) {
+        mErrorMessageTextView.setText(errorText);
         mErrorMessageTextView.setVisibility(View.VISIBLE);
         mRecyclerView.setVisibility(View.INVISIBLE);
         mProgressBar.setVisibility(View.INVISIBLE);
@@ -151,5 +180,15 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnCl
 
     private void hideProgressBar() {
         mProgressBar.setVisibility(View.GONE);
+    }
+
+    private boolean isConnected() {
+        return connectivityManager != null &&
+                connectivityManager.getActiveNetworkInfo() != null
+                && connectivityManager.getActiveNetworkInfo().isConnectedOrConnecting();
+    }
+
+    private void showToastNetworkError() {
+        Toast.makeText(this, getString(R.string.network_error), Toast.LENGTH_SHORT).show();
     }
 }

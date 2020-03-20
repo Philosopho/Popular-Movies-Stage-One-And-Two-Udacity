@@ -9,5 +9,6 @@
     <string name="main_activity_title">Pop Movies</string>
     <string name="popular_sorted_true">Movies already sorted by popularity.</string>
     <string name="rated_sorted_true">Movies already sorted by highest rated.</string>
+    <string name="network_error">No internet connection.</string>
 
 </resources>
