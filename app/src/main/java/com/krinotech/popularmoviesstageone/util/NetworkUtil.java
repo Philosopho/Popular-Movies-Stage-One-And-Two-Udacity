@@ -104,7 +104,7 @@ public class NetworkUtil {
         XLARGE("w500"),
         XXLARGE("w780");
 
-        private final String size;
+        final String size;
 
         ImageSize(String size){
             this.size = size;
