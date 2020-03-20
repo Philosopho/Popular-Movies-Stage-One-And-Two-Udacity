@@ -36,10 +36,12 @@ public class MovieJsonUtil {
                 String overview = jsonObjectResult.getString(OVERVIEW);
                 String releaseDate = jsonObjectResult.getString(RELEASE_DATE);
                 String title = jsonObjectResult.getString(TITLE);
+                String originalTitle = jsonObjectResult.getString(ORIGINAL_TITLE);
                 int Id = jsonObjectResult.getInt(ID);
                 double voteAverage = jsonObjectResult.getDouble(VOTE_AVERAGE);
 
-                Movie movie = new Movie(Id, title, posterPath, releaseDate, voteAverage, overview);
+                Movie movie = new Movie(Id, title, posterPath,
+                        releaseDate, voteAverage, overview, originalTitle);
                 movies[i] = movie;
             }
 

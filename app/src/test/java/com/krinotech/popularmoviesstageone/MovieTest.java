@@ -15,7 +15,7 @@ public class MovieTest {
     private String releaseDateParam = "1965";
     private double voteAverage = 4.9;
     private String plotSynopsis = "A deadly shark, a deadly game.";
-
+    private String originalTitle = "Original Title";
     private Movie testSubject;
 
     @Before
@@ -26,7 +26,8 @@ public class MovieTest {
                 imageUrlParam,
                 releaseDateParam,
                 voteAverage,
-                plotSynopsis);
+                plotSynopsis,
+                originalTitle);
     }
 
     @Test
@@ -62,5 +63,10 @@ public class MovieTest {
     @Test
     public void movie_getPlotSynopsis_should_return_plotSynopsis() {
         assertEquals(testSubject.getPlotSynopsis(), plotSynopsis);
+    }
+
+    @Test
+    public void movie_getOriginalTitle_should_return_originalTitle() {
+        assertEquals(testSubject.getOriginalTitle(), originalTitle);
     }
 }
