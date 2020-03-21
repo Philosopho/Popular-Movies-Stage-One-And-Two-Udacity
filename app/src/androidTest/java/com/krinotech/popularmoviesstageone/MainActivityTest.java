@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTest {
 
-    public ActivityTestRule<MainActivity> testSubject =
+    private ActivityTestRule<MainActivity> testSubject =
             new ActivityTestRule<>(MainActivity.class, false, false);
 
     @Test

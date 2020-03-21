@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetailsActivity"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/tv_movie_details_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/title_size"
+            android:padding="30dp"
+            tools:text="Movie Title"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_movie_details_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_toStartOf="@+id/tv_details_release_date_header"
+                android:layout_toLeftOf="@+id/tv_details_release_date_header"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/default_movie_poster_content_description"
+                android:padding="10dp"
+                android:scaleType="fitXY"
+                tools:src="http://image.tmdb.org/t/p/w185//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg" />
+
+            <TextView
+                android:id="@+id/tv_details_original_title_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@id/iv_movie_details_image"
+                android:padding="10dp"
+                android:text="@string/original_title_header"
+                android:textSize="@dimen/text_size_header"
+                android:layout_toEndOf="@id/iv_movie_details_image" />
+
+            <TextView
+                android:id="@+id/tv_details_original_title"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_details_original_title_header"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:padding="5dp"
+                tools:text="The Wave incoming: Part Three thousand" />
+
+            <TextView
+                android:id="@+id/tv_details_release_date_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_details_original_title"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:padding="10dp"
+                android:text="@string/release_date_header"
+                android:textSize="@dimen/text_size_header" />
+
+            <TextView
+                android:id="@+id/tv_details_release_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_details_release_date_header"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerHorizontal="true"
+
+                android:padding="5dp"
+                tools:text="2017-9-5" />
+
+            <TextView
+                android:id="@+id/tv_rating_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_details_release_date"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:padding="10dp"
+                android:text="@string/ratings_header"
+                android:textSize="@dimen/text_size_header" />
+
+            <TextView
+                android:id="@+id/tv_details_vote_average"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_rating_header"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerHorizontal="true"
+                android:padding="5dp"
+                tools:text="9/10" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_plot_synopsis"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textSize="16sp"
+            android:padding="10dp"
+            tools:text="@tools:sample/lorem/random"
+        />
+
+    </LinearLayout>
+
+</ScrollView>

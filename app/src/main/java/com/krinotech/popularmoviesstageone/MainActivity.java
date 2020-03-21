@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnCl
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(mMovieAdapter);
         connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
         if(!isConnected()){
             mSortedPopular = false;
         }
@@ -120,8 +122,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnCl
 
     @Override
     public void onClick(Movie movie) {
-        String text = movie.getTitle();
-        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+        launchDetailsActivity(movie);
     }
 
     private class MovieTask extends AsyncTask<URL, Void, Movie[]> {
@@ -190,5 +191,17 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnCl
 
     private void showToastNetworkError() {
         Toast.makeText(this, getString(R.string.network_error), Toast.LENGTH_SHORT).show();
+    }
+
+    private void launchDetailsActivity(Movie movie) {
+        Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+        intent.putExtra(getString(R.string.TITLE_EXTRA), movie.getTitle());
+        intent.putExtra(getString(R.string.ORIGINAL_TITLE_EXTRA), movie.getOriginalTitle());
+        intent.putExtra(getString(R.string.VOTE_AVERAGE_EXTRA), movie.getVoteAverage());
+        intent.putExtra(getString(R.string.IMAGE_URL_EXTRA), movie.getImageUrl());
+        intent.putExtra(getString(R.string.PLOT_SYNOPSIS_EXTRA), movie.getPlotSynopsis());
+        intent.putExtra(getString(R.string.RELEASE_DATE_EXTRA), movie.getReleaseDate());
+
+        startActivity(intent);
     }
 }

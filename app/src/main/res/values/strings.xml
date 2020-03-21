@@ -11,4 +11,18 @@
     <string name="rated_sorted_true">Movies already sorted by highest rated.</string>
     <string name="network_error">No internet connection.</string>
 
+    <!-- Intent EXTRA Strings -->
+    <string name="TITLE_EXTRA">com.krinotech.popularmoviesstageone.TITLE</string>
+    <string name="ORIGINAL_TITLE_EXTRA">com.krinotech.popularmoviesstageone.ORIGINAL_TITLE</string>
+    <string name="PLOT_SYNOPSIS_EXTRA">com.krinotech.popularmoviesstageone.PLOT_SYNOPSIS</string>
+    <string name="IMAGE_URL_EXTRA">com.krinotech.popularmoviesstageone.IMAGE_URL</string>
+    <string name="VOTE_AVERAGE_EXTRA">com.krinotech.popularmoviesstageone.VOTE_AVERAGE</string>
+    <string name="RELEASE_DATE_EXTRA">com.krinotech.popularmoviesstageone.RELEASE_DATE</string>
+
+    <!-- Details Activity -->
+    <string name="details_activity_title">Movie Details</string>
+    <string name="release_date_header">Release Date</string>
+    <string name="original_title_header">Original Title</string>
+    <string name="ratings_header">Ratings</string>
+
 </resources>

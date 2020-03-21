@@ -2,7 +2,7 @@ package com.krinotech.popularmoviesstageone.model;
 
 public class Movie {
 
-    public int _ID;
+    private int _ID;
     private String title;
     private String imageUrl;
     private String releaseDate;
