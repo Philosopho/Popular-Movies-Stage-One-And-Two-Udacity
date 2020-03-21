@@ -63,8 +63,10 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:textAlignment="viewEnd"
                 android:padding="5dp"
-                tools:text="The Wave incoming: Part Three thousand" />
+                tools:text="The Wave incoming: Part Three thousand"
+                android:gravity="end" />
 
             <TextView
                 android:id="@+id/tv_details_release_date_header"

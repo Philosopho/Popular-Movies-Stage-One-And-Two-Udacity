@@ -13,7 +13,8 @@ import com.squareup.picasso.Picasso;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapterViewHolder> {
 
-    public Movie[] movies;
+    private Movie[] movies;
+    @SuppressWarnings("CanBeFinal")
     private OnClickMovieHandler clickHandler;
 
     @Override
@@ -33,7 +34,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     public class MovieAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         final ImageView movieListItemImageView;
 
-        public MovieAdapterViewHolder(@NonNull View itemView) {
+        MovieAdapterViewHolder(@NonNull View itemView) {
             super(itemView);
 
             movieListItemImageView = itemView.findViewById(R.id.iv_movie_list_item);

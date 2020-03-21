@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 public class NetworkUtil {
 
-    public static final String TAG = NetworkUtil.class.getSimpleName();
+    private static final String TAG = NetworkUtil.class.getSimpleName();
 
     public static final String MOVIE_BASE_URL = "https://api.themoviedb.org/3/movie";
 

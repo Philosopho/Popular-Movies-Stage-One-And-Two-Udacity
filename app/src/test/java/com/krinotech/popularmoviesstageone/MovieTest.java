@@ -14,6 +14,7 @@ public class MovieTest {
     private String imageUrlParam = "movieDatabase";
     private String releaseDateParam = "1965";
     private double voteAverage = 4.9;
+    @SuppressWarnings("CanBeFinal")
     private String plotSynopsis = "A deadly shark, a deadly game.";
     private String originalTitle = "Original Title";
     private Movie testSubject;
