@@ -1,4 +1,4 @@
-package com.krinotech.popularmoviesstageone.util;
+package com.krinotech.popularmovies.util;
 
 import org.junit.Test;
 

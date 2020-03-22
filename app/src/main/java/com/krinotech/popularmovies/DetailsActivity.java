@@ -1,4 +1,4 @@
-package com.krinotech.popularmoviesstageone;
+package com.krinotech.popularmovies;
 
 import androidx.appcompat.app.AppCompatActivity;
 

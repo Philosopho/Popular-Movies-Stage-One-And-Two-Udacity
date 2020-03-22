@@ -1,4 +1,4 @@
-package com.krinotech.popularmoviesstageone.model;
+package com.krinotech.popularmovies.model;
 
 public class Movie {
 

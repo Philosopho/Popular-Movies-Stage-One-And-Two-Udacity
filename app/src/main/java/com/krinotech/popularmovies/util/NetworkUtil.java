@@ -1,9 +1,9 @@
-package com.krinotech.popularmoviesstageone.util;
+package com.krinotech.popularmovies.util;
 
 import android.net.Uri;
 import android.util.Log;
 
-import com.krinotech.popularmoviesstageone.BuildConfig;
+import com.krinotech.popularmovies.BuildConfig;
 
 import java.io.IOException;
 import java.io.InputStream;

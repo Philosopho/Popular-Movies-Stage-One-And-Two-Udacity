@@ -1,4 +1,4 @@
-package com.krinotech.popularmoviesstageone;
+package com.krinotech.popularmovies;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
