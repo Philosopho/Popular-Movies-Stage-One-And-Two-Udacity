@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnCl
     private MovieAdapter mMovieAdapter;
     private boolean mSortedPopular = true;
     private boolean mSortedRatings = false;
-    private ConnectivityManager connectivityManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +53,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnCl
         mRecyclerView.setLayoutManager(gridLayoutManager);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(mMovieAdapter);
-        connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
         if(!isConnected(this)){
             mSortedPopular = false;
