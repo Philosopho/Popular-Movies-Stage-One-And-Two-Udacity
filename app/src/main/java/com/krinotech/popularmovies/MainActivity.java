@@ -17,12 +17,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.krinotech.popularmovies.helper.NetworkConnectionHelper;
 import com.krinotech.popularmovies.model.Movie;
 import com.krinotech.popularmovies.util.MovieJsonUtil;
 import com.krinotech.popularmovies.util.NetworkUtil;
 
 import java.io.IOException;
 import java.net.URL;
+
+import static com.krinotech.popularmovies.helper.NetworkConnectionHelper.isConnected;
 
 public class MainActivity extends AppCompatActivity implements MovieAdapter.OnClickMovieHandler {
     public static final String TAG = MainActivity.class.getSimpleName();
@@ -53,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnCl
         mRecyclerView.setAdapter(mMovieAdapter);
         connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        if(!isConnected()){
+        if(!isConnected(this)){
             mSortedPopular = false;
         }
         new MovieTask().execute(NetworkUtil.getPopularMoviesURL());
@@ -83,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnCl
     }
 
     private void getMoviesPopular() {
-        if(isConnected()){
+        if(isConnected(this)){
 
             if(!mSortedPopular){
                 new MovieTask().execute(NetworkUtil.getPopularMoviesURL());
@@ -101,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnCl
     }
 
     private void getMoviesRated() {
-        if(isConnected()){
+        if(isConnected(this)){
 
             if(!mSortedRatings){
                 new MovieTask().execute(NetworkUtil.getTopRatedMoviesURL());
@@ -150,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnCl
                 mMovieAdapter.setMovies(movies);
             }
             else {
-                if(isConnected()){
+                if(isConnected(MainActivity.this)){
                     showErrorMessage(getString(R.string.an_error_occurred));
                 }
                 else {
@@ -180,11 +183,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnCl
         mProgressBar.setVisibility(View.GONE);
     }
 
-    private boolean isConnected() {
-        return connectivityManager != null &&
-                connectivityManager.getActiveNetworkInfo() != null
-                && connectivityManager.getActiveNetworkInfo().isConnectedOrConnecting();
-    }
 
     private void showToastNetworkError() {
         Toast.makeText(this, getString(R.string.network_error), Toast.LENGTH_SHORT).show();
