@@ -12,7 +12,7 @@
     <string name="network_error">No internet connection.</string>
 
     <!-- Intent EXTRA Strings -->
-    <string name="TITLE_EXTRA">com.krinotech.popularmoviesstageone.TITLE</string>
+    <string name="TITLE_EXTRA">com.krinotech.popularmovies.TITLE</string>
     <string name="ORIGINAL_TITLE_EXTRA">com.krinotech.popularmovies.ORIGINAL_TITLE</string>
     <string name="PLOT_SYNOPSIS_EXTRA">com.krinotech.popularmovies.PLOT_SYNOPSIS</string>
     <string name="IMAGE_URL_EXTRA">com.krinotech.popularmovies.IMAGE_URL</string>
