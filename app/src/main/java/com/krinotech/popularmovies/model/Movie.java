@@ -25,6 +25,17 @@ public class Movie {
         this.originalTitle = originalTitle;
     }
 
+    public Movie(String title, String imageUrl,
+                 String releaseDate, double voteAverage, String plotSynopsis,
+                 String originalTitle) {
+        this.title = title;
+        this.imageUrl = imageUrl;
+        this.releaseDate = releaseDate;
+        this.voteAverage = voteAverage;
+        this.plotSynopsis = plotSynopsis;
+        this.originalTitle = originalTitle;
+    }
+
     public int getID() { return _ID; }
 
     public String getTitle() {
@@ -42,6 +53,8 @@ public class Movie {
     public double getVoteAverage() {
         return voteAverage;
     }
+
+    public String getVoteAverageText() { return voteAverage + "/10"; }
 
     public String getPlotSynopsis() {
         return plotSynopsis;
