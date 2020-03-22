@@ -23,7 +23,9 @@ public class DetailsActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
 
         // Enable the Up button
-        ab.setDisplayHomeAsUpEnabled(true);
+        if (ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+        }
 
         ActivityDetailsBinding activityDetailsBinding = DataBindingUtil
                 .setContentView(this, R.layout.activity_details);
