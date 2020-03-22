@@ -40,9 +40,5 @@ public class DetailsActivity extends AppCompatActivity {
         Movie movie = new Movie(title, imageUrl, releaseDate, voteAverage, plotSynopsis, originalTitle);
 
         activityDetailsBinding.setMovie(movie);
-
-        ImageView posterImageView = findViewById(R.id.iv_movie_details_image);
-
-        Picasso.get().load(imageUrl).into(posterImageView);
     }
 }
