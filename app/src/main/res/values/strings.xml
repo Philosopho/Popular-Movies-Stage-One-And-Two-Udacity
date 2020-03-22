@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Popular Movies, Stage One</string>
+    <string name="app_name">Popular Movies</string>
     <string name="an_error_occurred">An error occurred</string>
     <string name="default_movie_poster_content_description">A Movie Poster</string>
     <string name="popular_menu_item">Most Popular</string>
@@ -13,11 +13,11 @@
 
     <!-- Intent EXTRA Strings -->
     <string name="TITLE_EXTRA">com.krinotech.popularmoviesstageone.TITLE</string>
-    <string name="ORIGINAL_TITLE_EXTRA">com.krinotech.popularmoviesstageone.ORIGINAL_TITLE</string>
-    <string name="PLOT_SYNOPSIS_EXTRA">com.krinotech.popularmoviesstageone.PLOT_SYNOPSIS</string>
-    <string name="IMAGE_URL_EXTRA">com.krinotech.popularmoviesstageone.IMAGE_URL</string>
-    <string name="VOTE_AVERAGE_EXTRA">com.krinotech.popularmoviesstageone.VOTE_AVERAGE</string>
-    <string name="RELEASE_DATE_EXTRA">com.krinotech.popularmoviesstageone.RELEASE_DATE</string>
+    <string name="ORIGINAL_TITLE_EXTRA">com.krinotech.popularmovies.ORIGINAL_TITLE</string>
+    <string name="PLOT_SYNOPSIS_EXTRA">com.krinotech.popularmovies.PLOT_SYNOPSIS</string>
+    <string name="IMAGE_URL_EXTRA">com.krinotech.popularmovies.IMAGE_URL</string>
+    <string name="VOTE_AVERAGE_EXTRA">com.krinotech.popularmovies.VOTE_AVERAGE</string>
+    <string name="RELEASE_DATE_EXTRA">com.krinotech.popularmovies.RELEASE_DATE</string>
 
     <!-- Details Activity -->
     <string name="details_activity_title">Movie Details</string>

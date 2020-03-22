@@ -1,4 +1,4 @@
-package com.krinotech.popularmoviesstageone;
+package com.krinotech.popularmovies;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.krinotech.popularmoviesstageone.model.Movie;
+import com.krinotech.popularmovies.model.Movie;
 import com.squareup.picasso.Picasso;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapterViewHolder> {

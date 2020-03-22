@@ -1,4 +1,4 @@
-package com.krinotech.popularmoviesstageone;
+package com.krinotech.popularmovies;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,9 +17,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.krinotech.popularmoviesstageone.model.Movie;
-import com.krinotech.popularmoviesstageone.util.MovieJsonUtil;
-import com.krinotech.popularmoviesstageone.util.NetworkUtil;
+import com.krinotech.popularmovies.model.Movie;
+import com.krinotech.popularmovies.util.MovieJsonUtil;
+import com.krinotech.popularmovies.util.NetworkUtil;
 
 import java.io.IOException;
 import java.net.URL;

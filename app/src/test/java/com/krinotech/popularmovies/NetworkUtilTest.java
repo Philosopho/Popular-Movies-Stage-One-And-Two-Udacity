@@ -1,6 +1,6 @@
-package com.krinotech.popularmoviesstageone;
+package com.krinotech.popularmovies;
 
-import com.krinotech.popularmoviesstageone.util.NetworkUtil;
+import com.krinotech.popularmovies.util.NetworkUtil;
 
 import org.junit.Test;
 

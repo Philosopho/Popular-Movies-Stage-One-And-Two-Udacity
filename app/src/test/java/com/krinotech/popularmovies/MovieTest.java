@@ -1,6 +1,6 @@
-package com.krinotech.popularmoviesstageone;
+package com.krinotech.popularmovies;
 
-import com.krinotech.popularmoviesstageone.model.Movie;
+import com.krinotech.popularmovies.model.Movie;
 
 import org.junit.Before;
 import org.junit.Test;

@@ -1,6 +1,6 @@
-package com.krinotech.popularmoviesstageone.util;
+package com.krinotech.popularmovies.util;
 
-import com.krinotech.popularmoviesstageone.model.Movie;
+import com.krinotech.popularmovies.model.Movie;
 
 import org.json.JSONArray;
 import org.json.JSONException;
