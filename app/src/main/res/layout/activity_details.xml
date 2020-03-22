@@ -49,7 +49,7 @@
                     android:padding="10dp"
                     android:scaleType="fitXY"
                     app:imageUrl="@{movie.imageUrl}"
-                    tools:src="http://image.tmdb.org/t/p/w185//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg" />
+                    />
 
                 <TextView
                     android:id="@+id/tv_details_original_title_header"
