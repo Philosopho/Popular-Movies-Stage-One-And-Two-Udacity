@@ -26,6 +26,43 @@ public class NetworkUtil {
 
     public static final String API_KEY_PARAM = "api_key";
 
+    public static final String APPEND_PARAM = "append_to_response";
+
+    public static final String REVIEWS_TRAILERS_QUERY = "reviews,videos";
+
+    public static final String YOUTUBE_BASE = "https://www.youtube.com/watch";
+
+    public static final String YOUTUBE_V_PARAM = "v";
+
+    public static Uri getYouTubeLinkURL(String query) {
+
+        return Uri.parse(YOUTUBE_BASE)
+                .buildUpon()
+                .appendQueryParameter(YOUTUBE_V_PARAM, query)
+                .build();
+    }
+
+    public static URL getMovieDetailsTrailersReviews(int id) {
+        String id_string = Integer.toString(id);
+
+//        Uri uri = Uri.parse(MOVIE_BASE_URL)
+//                .buildUpon()
+//                .appendPath(id_string)
+//                .appendQueryParameter(API_KEY_PARAM, BuildConfig.MOVIE_DB_V3_API_KEY)
+//                .appendQueryParameter(APPEND_PARAM, REVIEWS_TRAILERS_QUERY)
+//                .build();
+
+        String stringBuilder = MOVIE_BASE_URL +
+                "/" +
+                id_string +
+                "?" +
+                API_KEY_PARAM +
+                "=" + BuildConfig.MOVIE_DB_V3_API_KEY +
+                "&" + APPEND_PARAM + "=" +
+                REVIEWS_TRAILERS_QUERY;
+        Uri uri = Uri.parse(stringBuilder);
+        return instantiateURL(uri);
+    }
     public static URL getPopularMoviesURL() {
         Uri uri = buildBaseUri(POPULAR_URL);
 

@@ -24,5 +24,8 @@
     <string name="release_date_header">Release Date</string>
     <string name="original_title_header">Original Title</string>
     <string name="ratings_header">Ratings</string>
+    <string name="ID_EXTRA">com.krinotech.popularmovies.ID_EXTRA</string>
+    <string name="failed_to_load_details">Failed to load trailers and reviews.</string>
+    <string name="play_button">Play</string>
 
 </resources>

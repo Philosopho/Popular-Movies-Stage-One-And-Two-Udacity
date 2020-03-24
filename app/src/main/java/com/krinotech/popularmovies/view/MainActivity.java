@@ -1,13 +1,11 @@
-package com.krinotech.popularmovies;
+package com.krinotech.popularmovies.view;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -17,7 +15,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.krinotech.popularmovies.helper.NetworkConnectionHelper;
+import com.krinotech.popularmovies.adapter.MovieAdapter;
+import com.krinotech.popularmovies.R;
 import com.krinotech.popularmovies.model.Movie;
 import com.krinotech.popularmovies.util.MovieJsonUtil;
 import com.krinotech.popularmovies.util.NetworkUtil;
@@ -37,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnCl
     private boolean mSortedPopular = true;
     private boolean mSortedRatings = false;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +46,18 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnCl
         mProgressBar = findViewById(R.id.pb_movie_loader);
         mRecyclerView = findViewById(R.id.rv_movies);
 
+        initAdapter();
+
+        if(!isConnected(this)){
+            mSortedPopular = false;
+        }
+
+        new MovieTask().execute(NetworkUtil.getPopularMoviesURL());
+
+        setTitle(getString(R.string.main_activity_title));
+    }
+
+    public void initAdapter() {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
 
         mMovieAdapter = new MovieAdapter(this);
@@ -53,13 +65,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnCl
         mRecyclerView.setLayoutManager(gridLayoutManager);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(mMovieAdapter);
-
-        if(!isConnected(this)){
-            mSortedPopular = false;
-        }
-        new MovieTask().execute(NetworkUtil.getPopularMoviesURL());
-
-        setTitle(getString(R.string.main_activity_title));
     }
 
     @Override
@@ -188,6 +193,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnCl
 
     private void launchDetailsActivity(Movie movie) {
         Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+        intent.putExtra(getString(R.string.ID_EXTRA), movie.getID());
         intent.putExtra(getString(R.string.TITLE_EXTRA), movie.getTitle());
         intent.putExtra(getString(R.string.ORIGINAL_TITLE_EXTRA), movie.getOriginalTitle());
         intent.putExtra(getString(R.string.VOTE_AVERAGE_EXTRA), movie.getVoteAverage());
