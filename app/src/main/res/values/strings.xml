@@ -27,5 +27,8 @@
     <string name="ID_EXTRA">com.krinotech.popularmovies.ID_EXTRA</string>
     <string name="failed_to_load_details">Failed to load trailers and reviews.</string>
     <string name="play_button">Play</string>
+    <string name="length">Length</string>
+    <string name="revenue">Revenue</string>
+    <string name="budget">Budget</string>
 
 </resources>

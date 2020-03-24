@@ -9,8 +9,8 @@
     android:textSize="20sp"
     android:padding="15dp"
     android:drawablePadding="10dp"
-    android:drawableLeft="@drawable/ic_launcher_background"
-    android:drawableStart="@drawable/ic_launcher_background"
+    android:drawableLeft="@drawable/baseline_play_arrow_24"
+    android:drawableStart="@drawable/baseline_play_arrow_24"
     tools:text="Batman: The Dark Knight HD Trailer 1"
     >
 

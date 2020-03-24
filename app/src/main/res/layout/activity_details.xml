@@ -134,6 +134,75 @@
                         android:padding="5dp"
                         android:text="@{movie.voteAverageText}"
                         tools:text="9/10" />
+
+                    <TextView
+                        android:id="@+id/tv_budget_header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_details_vote_average"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:padding="10dp"
+                        android:text="@string/budget"
+                        android:textSize="@dimen/text_size_header" />
+
+                    <TextView
+                        android:id="@+id/tv_budget"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_budget_header"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerHorizontal="true"
+                        android:padding="5dp"
+                        android:text="@{movie.budget}"
+                        tools:text="$12,5000" />
+
+                    <TextView
+                        android:id="@+id/tv_revenue_header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_budget"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:padding="10dp"
+                        android:text="@string/revenue"
+                        android:textSize="@dimen/text_size_header" />
+
+                    <TextView
+                        android:id="@+id/tv_revenue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_revenue_header"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerHorizontal="true"
+                        android:padding="5dp"
+                        android:text="@{movie.revenue}"
+                        tools:text="$12,500,000" />
+
+                    <TextView
+                        android:id="@+id/tv_runtime_header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_revenue"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:padding="10dp"
+                        android:text="@string/length"
+                        android:textSize="@dimen/text_size_header" />
+
+                    <TextView
+                        android:id="@+id/tv_runtime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_runtime_header"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerHorizontal="true"
+                        android:padding="5dp"
+                        android:text="@{movie.runtime}"
+                        tools:text="60 Minutes" />
                 </RelativeLayout>
 
                 <TextView

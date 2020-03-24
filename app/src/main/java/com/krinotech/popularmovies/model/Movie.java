@@ -1,8 +1,12 @@
 package com.krinotech.popularmovies.model;
 
+import com.krinotech.popularmovies.helper.CurrencyFormatHelper;
+
 import java.util.List;
 
 public class Movie {
+    private static final String MINUTES = "Minutes";
+    private static final String NO_INFO = "No info";
 
     private int _ID;
     private String title;
@@ -65,24 +69,33 @@ public class Movie {
         this.budget = budget;
     }
 
-    public int getBudget() {
-        return budget;
+    public String getBudget() {
+        if(budget == 0){
+            return NO_INFO;
+        }
+        return CurrencyFormatHelper.convertToUSCurrency(budget);
     }
 
     public void setRuntime(int runtime) {
         this.runtime = runtime;
     }
 
-    public int getRuntime() {
-        return runtime;
+    public String getRuntime() {
+        if(runtime == 0){
+            return NO_INFO;
+        }
+        return runtime + " " + MINUTES;
     }
 
     public void setRevenue(int revenue) {
         this.revenue = revenue;
     }
 
-    public int getRevenue() {
-        return revenue;
+    public String getRevenue() {
+        if(revenue == 0){
+            return NO_INFO;
+        }
+        return CurrencyFormatHelper.convertToUSCurrency(revenue);
     }
 
     public void setReviews(Review[] reviews) {
