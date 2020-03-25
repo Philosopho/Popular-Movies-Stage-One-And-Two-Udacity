@@ -24,4 +24,5 @@
     <string name="REVIEWS_EXTRA">com.krinotech.popularmovies.REVIEWS_EXTRA</string>
     <string name="review_activity_title">Movie Reviews</string>
     <string name="MOVIE_PARCEL_EXTRA">com.krinotech.popularmovies.MOVIE_PARCEL_EXTRA</string>
+    <string name="SAVED_MOVIE_BUNDLE">com.krinotech.popularmovies.SAVED_MOVIE_BUNDLE</string>
 </resources>

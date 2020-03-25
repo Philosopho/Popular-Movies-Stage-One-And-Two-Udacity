@@ -15,7 +15,6 @@ import com.squareup.picasso.Picasso;
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapterViewHolder> {
 
     private Movie[] movies;
-    @SuppressWarnings("CanBeFinal")
     private OnClickMovieHandler clickHandler;
 
     @Override

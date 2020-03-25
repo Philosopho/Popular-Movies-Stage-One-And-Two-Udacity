@@ -15,13 +15,13 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".view.ReviewsActivity"
-            android:parentActivityName=".view.DetailsActivity"
+            android:parentActivityName=".view.MainActivity"
             >
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.DetailsActivity" />
+                android:value=".view.MainActivity" />
 
         </activity>
         <activity

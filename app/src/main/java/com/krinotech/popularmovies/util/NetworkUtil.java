@@ -45,13 +45,6 @@ public class NetworkUtil {
     public static URL getMovieDetailsTrailersReviews(int id) {
         String id_string = Integer.toString(id);
 
-//        Uri uri = Uri.parse(MOVIE_BASE_URL)
-//                .buildUpon()
-//                .appendPath(id_string)
-//                .appendQueryParameter(API_KEY_PARAM, BuildConfig.MOVIE_DB_V3_API_KEY)
-//                .appendQueryParameter(APPEND_PARAM, REVIEWS_TRAILERS_QUERY)
-//                .build();
-
         String stringBuilder = MOVIE_BASE_URL +
                 "/" +
                 id_string +
