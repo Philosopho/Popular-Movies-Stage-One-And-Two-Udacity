@@ -34,10 +34,6 @@ public class Trailer implements Parcelable {
         return link;
     }
 
-    public void setLink(Uri link) {
-        this.link = link;
-    }
-
     public String getName() {
         return name;
     }
