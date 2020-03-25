@@ -1,6 +1,5 @@
 package com.krinotech.popularmovies.view;
 
-import androidx.annotation.LongDef;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,9 +9,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.os.PersistableBundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
@@ -59,65 +55,33 @@ public class DetailsActivity extends AppCompatActivity {
 
         movie = intent.getParcelableExtra(getString(R.string.MOVIE_PARCEL_EXTRA));
         if(savedInstanceState != null) {
-            Log.d(TAG, "onCreate: SavedIntanceState");
             Bundle savedBundle = savedInstanceState.getBundle(getString(R.string.SAVED_MOVIE_BUNDLE));
-            if (savedBundle != null){
+
+            if (savedBundle != null ){
                 Movie savedMovie = savedBundle.getParcelable(getString(R.string.MOVIE_PARCEL_EXTRA));
-                if( savedMovie != null && movie.getID() == savedMovie.getID()) {
+                if (savedMovie == null){
+                    new MovieTask().execute(NetworkUtil.getMovieDetailsTrailersReviews(movie.getID()));
+                }
+                else {
                     movie = savedMovie;
+                    initAdapter();
+                    setReviewsOnClickListener();
+                    attachMovieAttributes();
                 }
             }
         }
         else {
-            Log.d(TAG, "MovieTask");
             new MovieTask().execute(NetworkUtil.getMovieDetailsTrailersReviews(movie.getID()));
         }
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d(TAG, "onStart: ");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume: ");
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause: ");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d(TAG, "onStop: ");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "onDestroy: ");
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.d(TAG, "onRestart: ");
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(getString(R.string.MOVIE_PARCEL_EXTRA), movie);
 
         outState.putBundle(getString(R.string.SAVED_MOVIE_BUNDLE), bundle);
-        super.onSaveInstanceState(outState, outPersistentState);
+        super.onSaveInstanceState(outState);
     }
 
     public class MovieTask extends AsyncTask<URL, Void, Void> {
