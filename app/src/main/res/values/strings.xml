@@ -30,5 +30,7 @@
     <string name="length">Length</string>
     <string name="revenue">Revenue</string>
     <string name="budget">Budget</string>
-
+    <string name="REVIEWS_EXTRA">com.krinotech.popularmovies.REVIEWS_EXTRA</string>
+    <string name="SAVED_MOVIE_EXTRA">com.krinotech.popularmovies.SAVED_MOVIE_EXTRA</string>
+    <string name="review_activity_title">Movie Reviews</string>
 </resources>

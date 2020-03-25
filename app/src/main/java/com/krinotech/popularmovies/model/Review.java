@@ -41,7 +41,7 @@ public class Review implements Parcelable {
         }
     };
 
-    private Review(Parcel in) {
+    protected Review(Parcel in) {
         author = in.readString();
         content = in.readString();
     }

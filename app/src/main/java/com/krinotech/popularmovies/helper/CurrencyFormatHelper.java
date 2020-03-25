@@ -1,7 +1,6 @@
 package com.krinotech.popularmovies.helper;
 
 import java.text.NumberFormat;
-import java.util.Currency;
 
 public class CurrencyFormatHelper {
 

@@ -1,5 +1,6 @@
 package com.krinotech.popularmovies.view;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -8,23 +9,24 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.krinotech.popularmovies.R;
 import com.krinotech.popularmovies.adapter.TrailerAdapter;
 import com.krinotech.popularmovies.databinding.ActivityDetailsBinding;
 import com.krinotech.popularmovies.model.Movie;
+import com.krinotech.popularmovies.model.Review;
 import com.krinotech.popularmovies.model.Trailer;
 import com.krinotech.popularmovies.util.MovieJsonUtil;
 import com.krinotech.popularmovies.util.NetworkUtil;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import static com.krinotech.popularmovies.helper.NetworkConnectionHelper.isConnected;
 
@@ -70,7 +72,18 @@ public class DetailsActivity extends AppCompatActivity {
         new MovieTask().execute(NetworkUtil.getMovieDetailsTrailersReviews(movie.getID()));
     }
 
-    public class MovieTask extends AsyncTask<URL, Void, Movie> {
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
+        outState.putInt(getString(R.string.ID_EXTRA), movie.getID());
+        outState.putString(getString(R.string.TITLE_EXTRA), movie.getTitle());
+        outState.putString(getString(R.string.ORIGINAL_TITLE_EXTRA), movie.getOriginalTitle());
+        outState.putString(getString(R.string.PLOT_SYNOPSIS_EXTRA), movie.getPlotSynopsis());
+        outState.putString(getString(R.string.RELEASE_DATE_EXTRA), movie.getReleaseDate());
+        outState.putDouble(getString(R.string.VOTE_AVERAGE_EXTRA), movie.getVoteAverage());
+        super.onSaveInstanceState(outState, outPersistentState);
+    }
+
+    public class MovieTask extends AsyncTask<URL, Void, Void> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -78,54 +91,67 @@ public class DetailsActivity extends AppCompatActivity {
         }
 
         @Override
-        protected Movie doInBackground(URL... urls) {
-            Movie detailsMovie = null;
+        protected Void doInBackground(URL... urls) {
             try {
                 String response = NetworkUtil.getHttpResponse(urls[0]);
-                detailsMovie = MovieJsonUtil.parseJsonIntoReviewsAndTrailers(movie, response);
+                MovieJsonUtil.parseJsonIntoReviewsAndTrailers(movie, response);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return detailsMovie;
+            return null;
         }
 
         @Override
-        protected void onPostExecute(Movie detailsMovie) {
-            super.onPostExecute(movie);
+        protected void onPostExecute(Void nulLStuff) {
+            super.onPostExecute(nulLStuff);
             hideProgressBar();
             if(isConnected(DetailsActivity.this)){
-                if(detailsMovie != null) {
-                    movie = detailsMovie;
+                initAdapter();
 
-                    TrailerAdapter trailerAdapter = new TrailerAdapter(DetailsActivity.this, movie.getTrailers());
-
-                    activityDetailsBinding.listViewTrailers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            Trailer trailerClicked = (Trailer) parent.getItemAtPosition(position);
-
-                            Intent intent = new Intent(Intent.ACTION_VIEW, trailerClicked.getLink());
-
-                            try {
-                                startActivity(intent);
-                            } catch (ActivityNotFoundException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-
-                    activityDetailsBinding.listViewTrailers.setAdapter(trailerAdapter);
-                }
-                else {
-                    showErrorToast(getString(R.string.failed_to_load_details));
-                }
+                setReviewsOnClickListener();
             }
             else {
                 showErrorToast(getString(R.string.network_error));
             }
-            activityDetailsBinding.setMovie(movie);
-            activityDetailsBinding.svDetails.setVisibility(View.VISIBLE);
+            attachMovieAttributes();
         }
+    }
+
+    private void attachMovieAttributes() {
+        activityDetailsBinding.setMovie(movie);
+        activityDetailsBinding.svDetails.setVisibility(View.VISIBLE);
+    }
+
+    private void setReviewsOnClickListener() {
+        if(movie.getReviews() != null && movie.getReviews().length != 0) {
+            activityDetailsBinding.tvReviewAmountDetails.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startReviewsActivity();
+                }
+            });
+        }
+    }
+
+    private void initAdapter() {
+        TrailerAdapter trailerAdapter = new TrailerAdapter(DetailsActivity.this, movie.getTrailers());
+
+        activityDetailsBinding.listViewTrailers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Trailer trailerClicked = (Trailer) parent.getItemAtPosition(position);
+
+                Intent intent = new Intent(Intent.ACTION_VIEW, trailerClicked.getLink());
+
+                try {
+                    startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        activityDetailsBinding.listViewTrailers.setAdapter(trailerAdapter);
     }
 
     private void showErrorToast(String string) {
@@ -138,5 +164,14 @@ public class DetailsActivity extends AppCompatActivity {
 
     private void showProgressBar() {
         activityDetailsBinding.pbDetails.setVisibility(View.VISIBLE);
+    }
+
+    private void startReviewsActivity() {
+        Intent intent = new Intent(this, ReviewsActivity.class);
+        ArrayList<Review> reviews = new ArrayList<>(Arrays.asList(movie.getReviews()));
+
+        intent.putParcelableArrayListExtra(getString(R.string.REVIEWS_EXTRA), reviews);
+
+        startActivity(intent);
     }
 }

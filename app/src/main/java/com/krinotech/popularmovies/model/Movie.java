@@ -1,13 +1,10 @@
 package com.krinotech.popularmovies.model;
 
-import com.krinotech.popularmovies.helper.CurrencyFormatHelper;
+import com.krinotech.popularmovies.helper.MovieInfoHelper;
 
 import java.util.List;
 
 public class Movie {
-    private static final String MINUTES = "Minutes";
-    private static final String NO_INFO = "No info";
-
     private int _ID;
     private String title;
     private String imageUrl;
@@ -69,33 +66,24 @@ public class Movie {
         this.budget = budget;
     }
 
-    public String getBudget() {
-        if(budget == 0){
-            return NO_INFO;
-        }
-        return CurrencyFormatHelper.convertToUSCurrency(budget);
+    public String getBudgetStats() {
+        return MovieInfoHelper.checkBudget(budget);
     }
 
     public void setRuntime(int runtime) {
         this.runtime = runtime;
     }
 
-    public String getRuntime() {
-        if(runtime == 0){
-            return NO_INFO;
-        }
-        return runtime + " " + MINUTES;
+    public String getRuntimeStats() {
+        return MovieInfoHelper.checkRuntime(runtime);
     }
 
     public void setRevenue(int revenue) {
         this.revenue = revenue;
     }
 
-    public String getRevenue() {
-        if(revenue == 0){
-            return NO_INFO;
-        }
-        return CurrencyFormatHelper.convertToUSCurrency(revenue);
+    public String getRevenueStats() {
+        return MovieInfoHelper.checkRevenue(revenue);
     }
 
     public void setReviews(Review[] reviews) {
@@ -112,5 +100,9 @@ public class Movie {
 
     public void setTrailers(List<Trailer> trailers) {
         this.trailers = trailers;
+    }
+
+    public String getReviewStats() {
+        return MovieInfoHelper.checkReviews(reviews);
     }
 }
