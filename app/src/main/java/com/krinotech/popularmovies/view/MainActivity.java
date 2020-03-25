@@ -192,14 +192,11 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnCl
     }
 
     private void launchDetailsActivity(Movie movie) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(getString(R.string.MOVIE_PARCEL_EXTRA), movie);
+
         Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
-        intent.putExtra(getString(R.string.ID_EXTRA), movie.getID());
-        intent.putExtra(getString(R.string.TITLE_EXTRA), movie.getTitle());
-        intent.putExtra(getString(R.string.ORIGINAL_TITLE_EXTRA), movie.getOriginalTitle());
-        intent.putExtra(getString(R.string.VOTE_AVERAGE_EXTRA), movie.getVoteAverage());
-        intent.putExtra(getString(R.string.IMAGE_URL_EXTRA), movie.getImageUrl());
-        intent.putExtra(getString(R.string.PLOT_SYNOPSIS_EXTRA), movie.getPlotSynopsis());
-        intent.putExtra(getString(R.string.RELEASE_DATE_EXTRA), movie.getReleaseDate());
+        intent.putExtras(bundle);
 
         startActivity(intent);
     }

@@ -1,10 +1,13 @@
 package com.krinotech.popularmovies.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.krinotech.popularmovies.helper.MovieInfoHelper;
 
 import java.util.List;
 
-public class Movie {
+public class Movie implements Parcelable {
     private int _ID;
     private String title;
     private String imageUrl;
@@ -33,6 +36,33 @@ public class Movie {
         this.plotSynopsis = plotSynopsis;
         this.originalTitle = originalTitle;
     }
+
+    protected Movie(Parcel in) {
+        _ID = in.readInt();
+        title = in.readString();
+        imageUrl = in.readString();
+        releaseDate = in.readString();
+        voteAverage = in.readDouble();
+        plotSynopsis = in.readString();
+        originalTitle = in.readString();
+        reviews = in.createTypedArray(Review.CREATOR);
+        trailers = in.createTypedArrayList(Trailer.CREATOR);
+        budget = in.readInt();
+        runtime = in.readInt();
+        revenue = in.readInt();
+    }
+
+    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
 
     public int getID() { return _ID; }
 
@@ -104,5 +134,26 @@ public class Movie {
 
     public String getReviewStats() {
         return MovieInfoHelper.checkReviews(reviews);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(_ID);
+        dest.writeString(title);
+        dest.writeString(imageUrl);
+        dest.writeString(releaseDate);
+        dest.writeDouble(voteAverage);
+        dest.writeString(plotSynopsis);
+        dest.writeString(originalTitle);
+        dest.writeTypedArray(reviews, flags);
+        dest.writeTypedList(trailers);
+        dest.writeInt(budget);
+        dest.writeInt(runtime);
+        dest.writeInt(revenue);
     }
 }

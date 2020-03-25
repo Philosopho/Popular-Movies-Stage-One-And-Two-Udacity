@@ -53,33 +53,13 @@ public class DetailsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        int id = intent
-                .getIntExtra(getString(R.string.ID_EXTRA), 0);
-        String title = intent
-                .getStringExtra(getString(R.string.TITLE_EXTRA));
-        String originalTitle = intent
-                .getStringExtra(getString(R.string.ORIGINAL_TITLE_EXTRA));
-        String plotSynopsis = intent
-                .getStringExtra(getString(R.string.PLOT_SYNOPSIS_EXTRA));
-        String imageUrl = intent
-                .getStringExtra(getString(R.string.IMAGE_URL_EXTRA));
-        String releaseDate = intent
-                .getStringExtra(getString(R.string.RELEASE_DATE_EXTRA));
-        double voteAverage = intent
-                .getDoubleExtra(getString(R.string.VOTE_AVERAGE_EXTRA), 0.0);
+        movie = intent.getParcelableExtra(getString(R.string.MOVIE_PARCEL_EXTRA));
 
-        movie = new Movie(id, title, imageUrl, releaseDate, voteAverage, plotSynopsis, originalTitle);
         new MovieTask().execute(NetworkUtil.getMovieDetailsTrailersReviews(movie.getID()));
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
-        outState.putInt(getString(R.string.ID_EXTRA), movie.getID());
-        outState.putString(getString(R.string.TITLE_EXTRA), movie.getTitle());
-        outState.putString(getString(R.string.ORIGINAL_TITLE_EXTRA), movie.getOriginalTitle());
-        outState.putString(getString(R.string.PLOT_SYNOPSIS_EXTRA), movie.getPlotSynopsis());
-        outState.putString(getString(R.string.RELEASE_DATE_EXTRA), movie.getReleaseDate());
-        outState.putDouble(getString(R.string.VOTE_AVERAGE_EXTRA), movie.getVoteAverage());
         super.onSaveInstanceState(outState, outPersistentState);
     }
 
