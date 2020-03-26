@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.krinotech.popularmovies.Preferences;
 import com.krinotech.popularmovies.adapter.MovieAdapter;
 import com.krinotech.popularmovies.R;
 import com.krinotech.popularmovies.model.Movie;
@@ -39,8 +40,10 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnCl
     private RecyclerView mRecyclerView;
     private ProgressBar mProgressBar;
     private MovieAdapter mMovieAdapter;
-    private boolean mSortedPopular = true;
+    private Preferences preferences;
+    private boolean mSortedPopular = false;
     private boolean mSortedRatings = false;
+    private boolean mSortedFavorites = false;
 
 
     @Override
@@ -58,7 +61,18 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnCl
             mSortedPopular = false;
         }
 
-        new MovieTask().execute(NetworkUtil.getPopularMoviesURL());
+        preferences = new Preferences(getApplicationContext());
+
+        if(preferences.isFavorites()) {
+            loadAllFavoriteMovies();
+        }
+        else if(preferences.isHighestRated()) {
+            getMoviesRated();
+        }
+        else {
+            getMoviesPopular();
+        }
+
         setTitle(getString(R.string.main_activity_title));
     }
 
@@ -89,6 +103,9 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnCl
             case R.id.mi_rating:
                 getMoviesRated();
                 break;
+            case R.id.mi_favorites:
+                loadAllFavoriteMovies();
+                break;
         }
         return true;
     }
@@ -100,6 +117,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnCl
                 new MovieTask().execute(NetworkUtil.getPopularMoviesURL());
                 mSortedPopular = true;
                 mSortedRatings = false;
+                mSortedFavorites = false;
+                preferences.savePopularSelected();
             }
             else {
                 Toast.makeText(this, getString(R.string.popular_sorted_true), Toast.LENGTH_SHORT).show();
@@ -118,6 +137,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnCl
                 new MovieTask().execute(NetworkUtil.getTopRatedMoviesURL());
                 mSortedRatings = true;
                 mSortedPopular = false;
+                mSortedFavorites = false;
+                preferences.saveHighestRatedSelected();
             }
             else {
                 Toast.makeText(this, getString(R.string.rated_sorted_true), Toast.LENGTH_SHORT).show();
@@ -207,10 +228,15 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnCl
     }
 
     private void loadAllFavoriteMovies() {
-        MainViewModel mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        mSortedFavorites = true;
+        mSortedPopular = false;
+        mSortedFavorites = false;
+        preferences.saveFavoritesSelected();
+        final MainViewModel mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         mainViewModel.getMovies().observe(this, new Observer<List<Movie>>() {
             @Override
             public void onChanged(List<Movie> movies) {
+                mainViewModel.getMovies().removeObserver(this);
                 Movie[] favoriteMovies = new Movie[movies.size()];
                 mMovieAdapter.setMovies(movies.toArray(favoriteMovies));
             }

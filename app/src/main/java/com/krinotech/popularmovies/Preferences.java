@@ -10,6 +10,10 @@ public class Preferences {
 
     public static final String PREFS_NAME = "PRODUCT_APP";
     public static final String FAVORITES = "Product_Favorite";
+    public static final String SELECTED = "Selected";
+    private static final String POPULAR_MOVIES = "Popular_Movies";
+    private static final String HIGHEST_RATED_MOVIES = "Highest_Rated_Movies";
+    private static final String FAVORITE_MOVIES = "Favorite_Movies";
 
     private SharedPreferences sharedPreferences;
 
@@ -54,5 +58,43 @@ public class Preferences {
         favorites.remove(idString);
 
         saveToFavorites(favorites);
+    }
+
+    public void savePopularSelected() {
+        saveSelected(POPULAR_MOVIES);
+    }
+
+    public void saveHighestRatedSelected() {
+        saveSelected(HIGHEST_RATED_MOVIES);
+    }
+
+    public void saveFavoritesSelected() {
+        saveSelected(FAVORITE_MOVIES);
+    }
+
+    public boolean isPopular() {
+        String selected = getSelected();
+
+        return selected.equals(POPULAR_MOVIES);
+    }
+
+    public boolean isHighestRated() {
+        String selected = getSelected();
+
+        return selected.equals(HIGHEST_RATED_MOVIES);
+    }
+
+    public boolean isFavorites() {
+        String selected = getSelected();
+
+        return selected.equals(FAVORITE_MOVIES);
+    }
+
+    private String getSelected() {
+        return sharedPreferences.getString(SELECTED, POPULAR_MOVIES);
+    }
+
+    private void saveSelected(String selected) {
+        sharedPreferences.edit().putString(SELECTED, selected).apply();
     }
 }

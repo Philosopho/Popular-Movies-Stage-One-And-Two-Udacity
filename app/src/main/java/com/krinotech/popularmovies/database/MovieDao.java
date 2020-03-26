@@ -21,7 +21,7 @@ public interface MovieDao {
     @Query("SELECT * FROM movie WHERE ID == :id")
     LiveData<Movie> loadMovieById(int id);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertMovie(Movie movie);
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
