@@ -230,7 +230,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnCl
     private void loadAllFavoriteMovies() {
         mSortedFavorites = true;
         mSortedPopular = false;
-        mSortedFavorites = false;
+        mSortedRatings = false;
         preferences.saveFavoritesSelected();
         final MainViewModel mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         mainViewModel.getMovies().observe(this, new Observer<List<Movie>>() {
