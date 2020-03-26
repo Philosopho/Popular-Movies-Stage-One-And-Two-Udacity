@@ -2,6 +2,9 @@ package com.krinotech.popularmovies.view;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,9 +24,11 @@ import com.krinotech.popularmovies.R;
 import com.krinotech.popularmovies.model.Movie;
 import com.krinotech.popularmovies.util.MovieJsonUtil;
 import com.krinotech.popularmovies.util.NetworkUtil;
+import com.krinotech.popularmovies.viewmodel.MainViewModel;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 
 import static com.krinotech.popularmovies.helper.NetworkConnectionHelper.isConnected;
 
@@ -199,5 +204,16 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnCl
         intent.putExtras(bundle);
 
         startActivity(intent);
+    }
+
+    private void loadAllFavoriteMovies() {
+        MainViewModel mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        mainViewModel.getMovies().observe(this, new Observer<List<Movie>>() {
+            @Override
+            public void onChanged(List<Movie> movies) {
+                Movie[] favoriteMovies = new Movie[movies.size()];
+                mMovieAdapter.setMovies(movies.toArray(favoriteMovies));
+            }
+        });
     }
 }

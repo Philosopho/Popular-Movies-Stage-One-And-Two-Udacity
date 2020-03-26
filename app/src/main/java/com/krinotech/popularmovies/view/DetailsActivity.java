@@ -4,23 +4,31 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import com.krinotech.popularmovies.AddMovieViewModelFactory;
+import com.krinotech.popularmovies.MovieExecutors;
+import com.krinotech.popularmovies.Preferences;
 import com.krinotech.popularmovies.R;
 import com.krinotech.popularmovies.adapter.TrailerAdapter;
+import com.krinotech.popularmovies.database.MovieDatabase;
 import com.krinotech.popularmovies.databinding.ActivityDetailsBinding;
 import com.krinotech.popularmovies.model.Movie;
 import com.krinotech.popularmovies.model.Review;
 import com.krinotech.popularmovies.model.Trailer;
 import com.krinotech.popularmovies.util.MovieJsonUtil;
 import com.krinotech.popularmovies.util.NetworkUtil;
+import com.krinotech.popularmovies.viewmodel.AddMovieViewModel;
 
 import java.io.IOException;
 import java.net.URL;
@@ -31,13 +39,17 @@ import static com.krinotech.popularmovies.helper.NetworkConnectionHelper.isConne
 
 public class DetailsActivity extends AppCompatActivity {
     public static final String TAG = DetailsActivity.class.getSimpleName();
+
     private Movie movie;
     private ActivityDetailsBinding activityDetailsBinding;
+    private MovieDatabase movieDatabase;
+    private Preferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        movieDatabase = MovieDatabase.getInstance(this);
         // Get a support ActionBar corresponding to this toolbar
         ActionBar ab = getSupportActionBar();
 
@@ -53,25 +65,32 @@ public class DetailsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        movie = intent.getParcelableExtra(getString(R.string.MOVIE_PARCEL_EXTRA));
-        if(savedInstanceState != null) {
-            Bundle savedBundle = savedInstanceState.getBundle(getString(R.string.SAVED_MOVIE_BUNDLE));
+        preferences = new Preferences(getApplicationContext());
 
-            if (savedBundle != null ){
-                Movie savedMovie = savedBundle.getParcelable(getString(R.string.MOVIE_PARCEL_EXTRA));
-                if (savedMovie == null){
-                    new MovieTask().execute(NetworkUtil.getMovieDetailsTrailersReviews(movie.getID()));
-                }
-                else {
-                    movie = savedMovie;
-                    initAdapter();
-                    setReviewsOnClickListener();
-                    attachMovieAttributes();
-                }
-            }
+        movie = intent.getParcelableExtra(getString(R.string.MOVIE_PARCEL_EXTRA));
+
+        if (movie != null && preferences.containsFavorite(movie.getID())) {
+            saveFavoritedSettings();
+        }
+        else {
+            saveUnFavoritedSettings();
+        }
+        if(savedInstanceState != null) {
+            loadInstanceState(savedInstanceState);
         }
         else {
             new MovieTask().execute(NetworkUtil.getMovieDetailsTrailersReviews(movie.getID()));
+        }
+    }
+
+    private void loadInstanceState(Bundle savedInstanceState) {
+        Bundle savedBundle = savedInstanceState.getBundle(getString(R.string.SAVED_MOVIE_BUNDLE));
+
+        if (savedBundle != null ){
+            movie = savedBundle.getParcelable(getString(R.string.MOVIE_PARCEL_EXTRA));
+            initAdapter();
+            setReviewsOnClickListener();
+            attachMovieAttributes();
         }
     }
 
@@ -174,5 +193,81 @@ public class DetailsActivity extends AppCompatActivity {
         intent.putParcelableArrayListExtra(getString(R.string.REVIEWS_EXTRA), reviews);
 
         startActivity(intent);
+    }
+
+    public void addFavoriteMovie() {
+        preferences.addFavorite(movie.getID());
+
+        MovieExecutors.getInstance().diskIO().execute(new Runnable() {
+
+            @Override
+            public void run() {
+                movieDatabase.movieDao().insertMovie(movie);
+
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        saveFavoritedSettings();
+                    }
+                });
+            }
+        });
+    }
+
+    public void removeFavoriteMovie() {
+        preferences.removeFavorite(movie.getID());
+
+        MovieExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                movieDatabase.movieDao().deleteMovie(movie);
+
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        saveUnFavoritedSettings();
+                    }
+                });
+            }
+        });
+    }
+
+    private void saveUnFavoritedSettings() {
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addFavoriteMovie();
+            }
+        };
+        transformFavoritesButton(R.color.colorAccent,
+                R.color.black,
+                R.string.favorite,
+                listener);
+    }
+
+    private void saveFavoritedSettings() {
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeFavoriteMovie();
+            }
+        };
+
+        transformFavoritesButton(R.color.colorPrimary,
+                R.color.white,
+                R.string.favorited,
+                listener);
+    }
+
+    private void transformFavoritesButton(int RBackgroundColor, int RTextColor, int RText, View.OnClickListener listener) {
+        Resources resources = getResources();
+        activityDetailsBinding.favoritesButton.setBackgroundColor(resources
+                .getColor(RBackgroundColor));
+        activityDetailsBinding.favoritesButton.setTextColor(resources
+                .getColor(RTextColor));
+        activityDetailsBinding.favoritesButton.setText(RText);
+        activityDetailsBinding.favoritesButton.setOnClickListener(listener);
     }
 }

@@ -14,4 +14,9 @@
         android:title="@string/ratings_menu_item"
         app:showAsAction="ifRoom"
         />
+    <item
+        android:id="@+id/mi_favorites"
+        android:title="@string/favorites_menu_title"
+        app:showAsAction="ifRoom"
+        />
 </menu>

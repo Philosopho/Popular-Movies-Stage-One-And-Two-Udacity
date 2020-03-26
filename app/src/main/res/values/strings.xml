@@ -26,4 +26,6 @@
     <string name="MOVIE_PARCEL_EXTRA">com.krinotech.popularmovies.MOVIE_PARCEL_EXTRA</string>
     <string name="SAVED_MOVIE_BUNDLE">com.krinotech.popularmovies.SAVED_MOVIE_BUNDLE</string>
     <string name="favorite">Mark as favorite</string>
+    <string name="favorited">Favorited</string>
+    <string name="favorites_menu_title">Favorites</string>
 </resources>
