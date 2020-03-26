@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="10dp"
+    app:cardBackgroundColor="@color/colorAccent"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="2dp"
+        android:background="@drawable/card_gradient"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_reviewer_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:drawableTop="@drawable/baseline_person_black_24"
+            android:drawablePadding="15dp"
+            android:textColor="@color/colorAccent"
+            android:padding="10dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            tools:text="John1234" />
+
+        <TextView
+            android:id="@+id/tv_review_content"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/reviews_content_height"
+            android:textColor="@color/white"
+            android:padding="10dp"
+            tools:text="@tools:sample/lorem/random"
+            />
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

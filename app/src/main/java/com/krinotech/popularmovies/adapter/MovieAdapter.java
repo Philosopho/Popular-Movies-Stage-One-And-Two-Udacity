@@ -1,4 +1,4 @@
-package com.krinotech.popularmovies;
+package com.krinotech.popularmovies.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,13 +8,13 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.krinotech.popularmovies.R;
 import com.krinotech.popularmovies.model.Movie;
 import com.squareup.picasso.Picasso;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapterViewHolder> {
 
     private Movie[] movies;
-    @SuppressWarnings("CanBeFinal")
     private OnClickMovieHandler clickHandler;
 
     @Override
@@ -72,5 +72,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     public void setMovies(Movie[] movies){
         this.movies = movies;
         notifyDataSetChanged();
+    }
+
+    public Movie[] getMovies() {
+        return movies;
     }
 }

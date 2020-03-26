@@ -11,18 +11,21 @@
     <string name="rated_sorted_true">Movies already sorted by highest rated.</string>
     <string name="network_error">No internet connection.</string>
 
-    <!-- Intent EXTRA Strings -->
-    <string name="TITLE_EXTRA">com.krinotech.popularmoviesstageone.TITLE</string>
-    <string name="ORIGINAL_TITLE_EXTRA">com.krinotech.popularmovies.ORIGINAL_TITLE</string>
-    <string name="PLOT_SYNOPSIS_EXTRA">com.krinotech.popularmovies.PLOT_SYNOPSIS</string>
-    <string name="IMAGE_URL_EXTRA">com.krinotech.popularmovies.IMAGE_URL</string>
-    <string name="VOTE_AVERAGE_EXTRA">com.krinotech.popularmovies.VOTE_AVERAGE</string>
-    <string name="RELEASE_DATE_EXTRA">com.krinotech.popularmovies.RELEASE_DATE</string>
-
     <!-- Details Activity -->
     <string name="details_activity_title">Movie Details</string>
     <string name="release_date_header">Release Date</string>
     <string name="original_title_header">Original Title</string>
     <string name="ratings_header">Ratings</string>
-
+    <string name="failed_to_load_details">Failed to load trailers and reviews.</string>
+    <string name="play_button">Play</string>
+    <string name="length">Length</string>
+    <string name="revenue">Revenue</string>
+    <string name="budget">Budget</string>
+    <string name="REVIEWS_EXTRA">com.krinotech.popularmovies.REVIEWS_EXTRA</string>
+    <string name="review_activity_title">Movie Reviews</string>
+    <string name="MOVIE_PARCEL_EXTRA">com.krinotech.popularmovies.MOVIE_PARCEL_EXTRA</string>
+    <string name="SAVED_MOVIE_BUNDLE">com.krinotech.popularmovies.SAVED_MOVIE_BUNDLE</string>
+    <string name="favorite">Mark as favorite</string>
+    <string name="favorited">Favorited</string>
+    <string name="favorites_menu_title">Favorites</string>
 </resources>
