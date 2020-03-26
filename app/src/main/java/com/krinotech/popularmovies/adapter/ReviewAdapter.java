@@ -51,6 +51,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
 
         @Override
         public void onClick(View v) {
+
             if (selectedItems.get(getAdapterPosition(), false)) {
                 selectedItems.delete(getAdapterPosition());
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(WRAP_CONTENT, height_dps);

@@ -4,24 +4,27 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.MultiAutoCompleteTextView;
+import android.widget.Button;
 import android.widget.Toast;
 
-import com.krinotech.popularmovies.AddMovieViewModelFactory;
 import com.krinotech.popularmovies.MovieExecutors;
 import com.krinotech.popularmovies.Preferences;
 import com.krinotech.popularmovies.R;
-import com.krinotech.popularmovies.adapter.ReviewAdapter;
 import com.krinotech.popularmovies.adapter.TrailerAdapter;
 import com.krinotech.popularmovies.database.MovieDatabase;
 import com.krinotech.popularmovies.databinding.ActivityDetailsBinding;
@@ -30,14 +33,12 @@ import com.krinotech.popularmovies.model.Review;
 import com.krinotech.popularmovies.model.Trailer;
 import com.krinotech.popularmovies.util.MovieJsonUtil;
 import com.krinotech.popularmovies.util.NetworkUtil;
-import com.krinotech.popularmovies.viewmodel.AddMovieViewModel;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static com.krinotech.popularmovies.helper.NetworkConnectionHelper.isConnected;
 
 public class DetailsActivity extends AppCompatActivity {
@@ -73,10 +74,10 @@ public class DetailsActivity extends AppCompatActivity {
         movie = intent.getParcelableExtra(getString(R.string.MOVIE_PARCEL_EXTRA));
 
         if (movie != null && preferences.containsFavorite(movie.getID())) {
-            saveFavoritedSettings();
+            saveFavoritedSettings(false);
         }
         else {
-            saveUnFavoritedSettings();
+            saveUnFavoritedSettings(false);
         }
         if(savedInstanceState != null) {
             loadInstanceState(savedInstanceState);
@@ -211,7 +212,7 @@ public class DetailsActivity extends AppCompatActivity {
 
                     @Override
                     public void run() {
-                        saveFavoritedSettings();
+                        saveFavoritedSettings(true);
                     }
                 });
             }
@@ -230,27 +231,27 @@ public class DetailsActivity extends AppCompatActivity {
 
                     @Override
                     public void run() {
-                        saveUnFavoritedSettings();
+                        saveUnFavoritedSettings(true);
                     }
                 });
             }
         });
     }
 
-    private void saveUnFavoritedSettings() {
+    private void saveUnFavoritedSettings(boolean transform) {
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addFavoriteMovie();
             }
         };
-        transformFavoritesButton(R.color.colorAccent,
+        setFavoriteButton(R.color.colorAccent,
                 R.color.black,
                 R.string.favorite,
-                listener);
+                listener, transform);
     }
 
-    private void saveFavoritedSettings() {
+    private void saveFavoritedSettings(boolean transform) {
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -258,18 +259,44 @@ public class DetailsActivity extends AppCompatActivity {
             }
         };
 
-        transformFavoritesButton(R.color.colorPrimary,
+        setFavoriteButton(R.color.colorPrimary,
                 R.color.white,
                 R.string.favorited,
-                listener);
+                listener, transform);
     }
 
-    private void transformFavoritesButton(int RBackgroundColor, int RTextColor, int RText, View.OnClickListener listener) {
+    private void setFavoriteButton(int RBackgroundColor, int RTextColor, int RText, View.OnClickListener listener, boolean transform) {
         Resources resources = getResources();
-        activityDetailsBinding.favoritesButton.setBackgroundColor(resources
-                .getColor(RBackgroundColor));
-        activityDetailsBinding.favoritesButton.setTextColor(resources
-                .getColor(RTextColor));
+
+        if(transform){
+            final Button favoritesButton = activityDetailsBinding.favoritesButton;
+            int currentTextColor = favoritesButton.getCurrentTextColor();
+
+            ObjectAnimator.ofObject(favoritesButton,
+                    "textColor", new ArgbEvaluator(),
+                    currentTextColor, resources.getColor(RTextColor)).setDuration(250).start();
+
+            int colorFrom = ((ColorDrawable) favoritesButton.getBackground()).getColor();
+            int colorTo = resources.getColor(RBackgroundColor);
+            ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+            colorAnimation.setDuration(250); // milliseconds
+            colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+                @Override
+                public void onAnimationUpdate(ValueAnimator animator) {
+                    favoritesButton.setBackgroundColor((int) animator.getAnimatedValue());
+                }
+
+            });
+            colorAnimation.start();
+
+        }
+        else {
+            activityDetailsBinding.favoritesButton.setBackgroundColor(resources
+                    .getColor(RBackgroundColor));
+            activityDetailsBinding.favoritesButton.setTextColor(resources
+                    .getColor(RTextColor));
+        }
         activityDetailsBinding.favoritesButton.setText(RText);
         activityDetailsBinding.favoritesButton.setOnClickListener(listener);
     }
