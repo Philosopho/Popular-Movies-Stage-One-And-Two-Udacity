@@ -51,10 +51,8 @@ public class DetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         movieDatabase = MovieDatabase.getInstance(this);
-        // Get a support ActionBar corresponding to this toolbar
         ActionBar ab = getSupportActionBar();
 
-        // Enable the Up button
         if (ab != null) {
             ab.setDisplayHomeAsUpEnabled(true);
         }
