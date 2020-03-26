@@ -11,10 +11,7 @@ import android.animation.ValueAnimator;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.TransitionDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -62,7 +59,7 @@ public class DetailsActivity extends AppCompatActivity {
             ab.setDisplayHomeAsUpEnabled(true);
         }
 
-        activityDetailsBinding = DataBindingUtil
+        activityDetailsBinding =  DataBindingUtil
                 .setContentView(this, R.layout.activity_details);
 
         setTitle(getString(R.string.details_activity_title));
