@@ -9,4 +9,8 @@
 
     <!-- Button -->
     <dimen name="button_text_size_standard">18sp</dimen>
+
+    <!-- Reviews -->
+    <dimen name="reviews_content_height">75dp</dimen>
+
 </resources>

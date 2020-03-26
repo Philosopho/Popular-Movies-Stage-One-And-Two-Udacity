@@ -14,12 +14,14 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.Toast;
 
 import com.krinotech.popularmovies.AddMovieViewModelFactory;
 import com.krinotech.popularmovies.MovieExecutors;
 import com.krinotech.popularmovies.Preferences;
 import com.krinotech.popularmovies.R;
+import com.krinotech.popularmovies.adapter.ReviewAdapter;
 import com.krinotech.popularmovies.adapter.TrailerAdapter;
 import com.krinotech.popularmovies.database.MovieDatabase;
 import com.krinotech.popularmovies.databinding.ActivityDetailsBinding;
@@ -35,6 +37,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static com.krinotech.popularmovies.helper.NetworkConnectionHelper.isConnected;
 
 public class DetailsActivity extends AppCompatActivity {

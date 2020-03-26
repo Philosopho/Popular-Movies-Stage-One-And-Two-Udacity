@@ -1,8 +1,11 @@
 package com.krinotech.popularmovies.adapter;
 
+import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,23 +16,53 @@ import com.krinotech.popularmovies.model.Review;
 
 import java.util.List;
 
-public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder> {
-    private List<Review> reviews;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
-    public ReviewAdapter(List<Review> reviews) {
-        this.reviews = reviews;
+public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder> {
+    private static String TAG = ReviewAdapter.class.getSimpleName();
+    private List<Review> reviews;
+    private ReviewOnClickHandler clickListener;
+    private static SparseBooleanArray selectedItems;
+
+
+    public interface ReviewOnClickHandler {
+        void onClick(int position);
     }
 
-    class ReviewViewHolder extends RecyclerView.ViewHolder {
+    public ReviewAdapter(List<Review> reviews, ReviewOnClickHandler clickHandler) {
+        this.reviews = reviews;
+        this.clickListener = clickHandler;
+        selectedItems = new SparseBooleanArray();
+    }
+
+    class ReviewViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         final TextView authorNameTextView;
         final TextView contentTextView;
+        final int height_dps;
 
         ReviewViewHolder(@NonNull View itemView) {
             super(itemView);
             authorNameTextView = itemView.findViewById(R.id.tv_reviewer_name);
             contentTextView = itemView.findViewById(R.id.tv_review_content);
+            height_dps = (int) (itemView.getResources().getDimension(R.dimen.reviews_content_height));
+
+            itemView.setOnClickListener(this);
         }
 
+        @Override
+        public void onClick(View v) {
+            if (selectedItems.get(getAdapterPosition(), false)) {
+                selectedItems.delete(getAdapterPosition());
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(WRAP_CONTENT, height_dps);
+                contentTextView.setLayoutParams(layoutParams);
+            } else {
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
+                contentTextView.setLayoutParams(layoutParams);
+                selectedItems.put(getAdapterPosition(), true);
+            }
+            notifyDataSetChanged();
+            clickListener.onClick(getAdapterPosition());
+        }
     }
 
     @NonNull
@@ -42,6 +75,15 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
     @Override
     public void onBindViewHolder(@NonNull ReviewAdapter.ReviewViewHolder holder, int position) {
         Review review = reviews.get(position);
+
+        Log.d(TAG, selectedItems.toString());
+        if (selectedItems.get(position, false)) {
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
+            holder.contentTextView.setLayoutParams(layoutParams);
+        } else {
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(WRAP_CONTENT, holder.height_dps);
+            holder.contentTextView.setLayoutParams(layoutParams);
+        }
 
         holder.authorNameTextView.setText(review.getAuthor());
         holder.contentTextView.setText(review.getContent());
